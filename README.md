@@ -1,5 +1,5 @@
 # KVM-QEMU
-Chức năng tạo máy ảo và Migrate
+Thực hiện chức năng Migrate trong KVM-QEMU
 ## 1. Khái niệm:
 KVM (Kernel-base virtual machine): là một mudule nằm trong nhân Linux để có thể tạo ra không gian cho các ứng dụng để các ứng dụng đó có thể chạy 
 các tính với quyền lớn nhất.
@@ -22,37 +22,28 @@ Hình trên ta có thể hiểu: Đối với từng dạng ảo hóa như Kvm, 
 
 <img class="image__pic js-image-pic" src="http://i.imgur.com/c2Qn4V8.png" alt="" id="screenshot-image">
 
-## 3. Các chức năng của Kvm-qemu
-### 3.1. Tạo máy ảo
-Chức năng chính của Kvm-qemu là tạo được các máy ảo trên máy vật lý. Trong KVM-QEMU hỗ trợ việc tao máy ảo theo các cách:
-+ Từ file ISO
-+ Từ image có sẵn
-+ Từ trên mạng
-+ Từ Network boot
+## 3. Chức năng của Migrate KVM-QEMU
 
-### 3.2 Migrate
-
-#### 3.2.1: Khái niệm
+### 3.1: Khái niệm
 Migrate là chức năng được KVM-QEMU hỗ trợ, nó cho phép di chuyển các guest từ một host vật lý này sang host vật lý khác và không ảnh hướng để guest đang chạy cũng như dữ liệu bên trong nó
 
-#### 3.2.2 Vai trò
+### 3.2 Vai trò
 Migrate giúp cho nhà quản trị có thể di chuyển các guest trên host đi để phục vụ cho việc bảo trì và nâng cấp hệ thống, nó cũng giúp nhà quản trị nâng cao tính dự phòng, và cũng có thể làm nhiệm vụ load bandsing cho hệ thống khi một máy host quá tải
 
-#### 3.2.3 Cơ chế:
+### 3.3 Cơ chế:
 Migrate có 2 cơ chế:
 + Cơ chế Offline Migrate: là cơ chế cần phải tắt guest đi thực hiện việc di chuyển image và file xml của guest sang một host khác
 Mô hình thuần túy của cơ chế Offline Migrate
 <img class="image__pic js-image-pic" src="http://i.imgur.com/TbLqlOI.png" alt="" id="screenshot-image">
-+ Cơ chế Live Migrate: đây là cơ chế di chuyển guest khi guest vẫn đang hoạt động, quá trình trao đổi diễn ra rất nhanh các phiên làm việc kết nối hầu như
-không cảm nhận được sự gián đoạn nào. Quá trình Live Migrate được diễn ra như sau: Bước đầu tiên của quá trình Live Migrate 1 ảnh chụp ban đầu của guest trên host1
-được chuyển sang host2. Trong trường hợp người dùng đang truy cập tại host1 thì những sự thay đổi và hoạt động trên host1
-vẫn diễn ra bình thường, tuy nhiên những thay đổi này sẽ được ghi nhận. Những thay đổi trên host1 được đồng bộ liên tục đến host2
++ Cơ chế Live Migrate: đây là cơ chế di chuyển guest khi guest vẫn đang hoạt động, quá trình trao đổi diễn ra rất nhanh các phiên làm việc kết nối hầu như không cảm nhận được sự gián đoạn nào. Quá trình Live Migrate được diễn ra như sau: Bước đầu tiên của quá trình Live Migrate 1 ảnh chụp ban đầu của guest trên host1 được chuyển sang host2. Trong trường hợp người dùng đang truy cập tại host1 thì những sự thay đổi và hoạt động trên host1 vẫn diễn ra bình thường, tuy nhiên những thay đổi này sẽ được ghi nhận. Những thay đổi trên host1 được đồng bộ liên tục đến host2
 Khi đã đồng bộ xong thì guest trên host1 sẽ offline và các phiên truy cập trên host1 được chuyển sang host2.
-#### 3.2.4 Lab
+
+### 3.4 Lab
 Thực hiện tính năng Migrate đối với cơ chế Live Migrate kết hợp với hệ thống chia sẻ file NFS
 Ý tưởng của cơ chế này: Cần một Server cung cấp ổ cứng để 2 host có thể móc nối trực tiếp vào ổ cứng này
 
 **a. Yêu cầu**
+
 + Cả hai host chạy KVM phải mở port TCP/IP
 + Hệ thống chia sẻ file phải cùng tên ở trên cả server-storage và client-storage (2 host chạy KVM) phải có tạo cùng tên thư mục 
 + Trong quá trình tạo guest trên host
@@ -83,6 +74,7 @@ aptitude -y install qemu-kvm libvirt-bin virtinst bridge-utils
 echo vhost_net >> /etc/modules
 ```
 + Chỉnh sửa lại file interface để cấu hình Brigde network như sau
+
 ```
 vi /etc/network/interface
 ```
@@ -116,20 +108,17 @@ aptitude -y install virt-manager qemu-system hal
 c.3 Cài đặt NFS server
 Tham khảo tại [link](http://www.server-world.info/en/note?os=Ubuntu_14.04&p=nfs&f=1) sau:
 
-d. Lap
+**d. Lap**
+
 Đầu tiên tạo môt guest chạy trên host1
+
 d.1 Migrate dùng câu lệnh virsh
+
 + Thực hiện câu lênh trên host1 ( chứa guest1 đang chạy )
 ```
 virsh migrate --live <tên guest muốn migrate> qemu+ssh://<hostnam của đích chuyển đến>/system
 ```
 VD: ` virsh migrate --live guest1 qemu+ssh://10.10.10.20/system `
-Khi đó quan sát trên virt-manager sẽ thấy guest1 trên host1 sẽ di chuyển sang host2 mà vẫn đang ở trạng thái hoạt động thời gian downtime của guest1 
-là khá bé
+Khi đó quan sát trên virt-manager sẽ thấy guest1 trên host1 sẽ di chuyển sang host2 mà vẫn đang ở trạng thái hoạt động thời gian downtime của guest1 là khá bé
 
  
-
-
-
-
-
