@@ -144,4 +144,15 @@ Ngoài tùy chọn --live. Còn thêm một số các tùy chọn khác như:
 
 --unsafe : chuyển máy ngay cả trong chế độ không an toàn
  
+ Ngoài những tùy chọn trên có 3 tùy chọn rất đặc biệt, cũng có thể nói là tính năng nâng cao hơn đối với việc Migrate 
+ 
+ --direct : Sử dụng migrate trực tiếp host mà không cần 2 host đó phải sử dụng chung thư mục
+ 
+ --p2p : Sử dụng cho việc Migrate peer-to-peer 
+ 
+ --tunnelled : Sử dụng cơ chế tunnel để migrate các guest
+ 
+ Để hiểu thêm cơ chế migrate đối với 3 tùy chọn này. Bạn có thể tham khảo tại [link](https://libvirt.org/migration.html)
+ 
+Dưới đây là những thông tin tôi DOC được trong quá trình tìm hiểu KVM-QEMU. Hi vọng sẽ cung cấp được phần nào kiến thức basic cho các bạn mới tìm hiểu. Mọi thông tin thắc mắc các bạn có thể liên hệ với tôi qua skype `namptit307` để cùng thảo luận.
  
