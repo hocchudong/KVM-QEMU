@@ -154,5 +154,7 @@ Ngoài tùy chọn --live. Còn thêm một số các tùy chọn khác như:
  
  Để hiểu thêm cơ chế migrate đối với 3 tùy chọn này. Bạn có thể tham khảo tại [link](https://libvirt.org/migration.html)
  
+####        =====The end====  
+ 
 Dưới đây là những thông tin tôi DOC được trong quá trình tìm hiểu KVM-QEMU. Hi vọng sẽ cung cấp được phần nào kiến thức basic cho các bạn mới tìm hiểu. Mọi thông tin thắc mắc các bạn có thể liên hệ với tôi qua skype `namptit307` để cùng thảo luận.
  
