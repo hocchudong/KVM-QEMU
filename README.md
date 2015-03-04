@@ -1,5 +1,21 @@
 # KVM-QEMU
 Thực hiện chức năng Migrate trong KVM-QEMU
+## Mục lục
+- [1. Khái niệm](#kn)
+
+- [2. Các tool điều khiển KVM_QEMU](#dk)
+
+- [3. Chức năng Migrate trong KVM_QEMU](#chucnang)
+
+   [3.1. Khái niệm](#kn2)
+   
+   [3.2. Vai trò](#vc)
+   
+   [3.3. Cơ chế](#ch)
+   
+   [3.4. Lab](#lab)
+   
+<a name="kn"></a>
 ## 1. Khái niệm:
 KVM (Kernel-base virtual machine): là một mudule nằm trong nhân Linux để có thể tạo ra không gian cho các ứng dụng để các ứng dụng đó có thể chạy các tính với quyền lớn nhất.
 Qemu: là một hypervisor dạng Paravirtualization nó tương tự như VMwate workstation 
@@ -10,6 +26,7 @@ Kiến trúc của KVM-QEMU
 
 <img class="image__pic js-image-pic" src="http://i.imgur.com/LDUJSNZ.png" alt="" id="screenshot-image">
 
+<a name="dk"></a>
 ## 2. Các tool để điều khiển KVM-Qemu
 Bao gồm: 
 
@@ -23,16 +40,20 @@ Hình trên ta có thể hiểu: Đối với từng dạng ảo hóa như Kvm, 
 
 <img class="image__pic js-image-pic" src="http://i.imgur.com/c2Qn4V8.png" alt="" id="screenshot-image">
 
+<a name="chucnang"></a>
 ## 3. Chức năng của Migrate KVM-QEMU
 
+<a name="kn2"></a>
 ### 3.1: Khái niệm
 
 Migrate là chức năng được KVM-QEMU hỗ trợ, nó cho phép di chuyển các guest từ một host vật lý này sang host vật lý khác và không ảnh hướng để guest đang chạy cũng như dữ liệu bên trong nó
 
+<a name="vc"></a>
 ### 3.2 Vai trò
 
 Migrate giúp cho nhà quản trị có thể di chuyển các guest trên host đi để phục vụ cho việc bảo trì và nâng cấp hệ thống, nó cũng giúp nhà quản trị nâng cao tính dự phòng, và cũng có thể làm nhiệm vụ load bandsing cho hệ thống khi một máy host quá tải
 
+<a name="cn"></a>
 ### 3.3 Cơ chế:
 Migrate có 2 cơ chế:
 + Cơ chế Offline Migrate: là cơ chế cần phải tắt guest đi thực hiện việc di chuyển image và file xml của guest sang một host khác
@@ -44,6 +65,7 @@ Mô hình thuần túy của cơ chế Offline Migrate
 + Cơ chế Live Migrate: đây là cơ chế di chuyển guest khi guest vẫn đang hoạt động, quá trình trao đổi diễn ra rất nhanh các phiên làm việc kết nối hầu như không cảm nhận được sự gián đoạn nào. Quá trình Live Migrate được diễn ra như sau: Bước đầu tiên của quá trình Live Migrate 1 ảnh chụp ban đầu của guest trên host1 được chuyển sang host2. Trong trường hợp người dùng đang truy cập tại host1 thì những sự thay đổi và hoạt động trên host1 vẫn diễn ra bình thường, tuy nhiên những thay đổi này sẽ được ghi nhận. Những thay đổi trên host1 được đồng bộ liên tục đến host2
 Khi đã đồng bộ xong thì guest trên host1 sẽ offline và các phiên truy cập trên host1 được chuyển sang host2.
 
+<a name="lab"></a>
 ### 3.4 Lab
 
 Thực hiện tính năng Migrate đối với cơ chế Live Migrate kết hợp với hệ thống chia sẻ file NFS
