@@ -5,7 +5,7 @@ Thực hiện chức năng Migrate trong KVM-QEMU
 
 - [2. Các tool điều khiển KVM_QEMU](#dk)
 
-- [3. Chức năng Migrate trong KVM_QEMU](#chucnang)
+- [3. Tính năng Migrate trong KVM_QEMU](#chucnang)
 
    [3.1. Khái niệm](#kn2)
    
@@ -41,7 +41,7 @@ Hình trên ta có thể hiểu: Đối với từng dạng ảo hóa như Kvm, 
 <img class="image__pic js-image-pic" src="http://i.imgur.com/c2Qn4V8.png" alt="" id="screenshot-image">
 
 <a name="chucnang"></a>
-## 3. Chức năng của Migrate KVM-QEMU
+## 3. Tính năng Migrate trong KVM-QEMU
 
 <a name="kn2"></a>
 ### 3.1: Khái niệm
