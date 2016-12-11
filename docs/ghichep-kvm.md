@@ -41,7 +41,7 @@
  - Thành phần KVM để tạo và quản lý máy ảo
  - Thành phần đồ họa quản lý KVM 
  - Gói linux bridge để cung cấp cơ chế network ảo cho máy ảo.
- - Gói hỗ trợ X11 phía server
+ - Gói hỗ trợ X11 phía server (script sử dụng gói xorg và openbox là các gói nhỏ nhẹ và hỗ trợ GUI cho linux)
 
 #### Phía client 
 
@@ -56,9 +56,18 @@ Bước 1:
 Bước 2: 
 - Cấu hình putty để sử dụng được xming
 - Khởi động putty và cấu hình để kích hoạt X11 phía client theo hình các thao tác: `Connection` => `SSH` => `X11` 
-[Putty1](./images/img1.png)
+![Putty1](./images/img1.png)
 
 Bước 3: 
-- Thực hiện nhập IP của máy chủ Ubuntu vào mục `Secssion` trong putt
-[Putty2](./images/img2.png)
+- Thực hiện nhập IP của máy chủ Ubuntu vào mục `Secssion` trong putty
+![Putty2](./images/img2.png)
+
+- Login với tài khoản `root` (lưu ý, tính năng cho phép ssh bằng `root` phải được kích hoạt trước) và gõ lệnh dưới để khởi động công cụ quản lý KVM
+	```sh
+	virt-manager
+	```
+
+- Sẽ có màn hình thông báo của Xming được hiển thị ra, bắt đầu có thể sử dụng công cụ `virt-manager` để quản lý KVM
+
+![virt-manage](./images/img3.png)
 
