@@ -1,6 +1,6 @@
 # Hướng dẫn cài đặt và quản lý KVM 
 
-## Hướng dẫn sử dụng KVM bằng Xming
+## Hướng dẫn sử dụng KVM bằng Xming để điều khiển `Virtual Machine Manager`
 
 - XMING là công cụ cho phép quản lý KVM thông qua X11, XMING được cài trên windows và kết hợp cùng với các ứng dụng ssh (putty, MobaXterm ...)
 
@@ -8,7 +8,7 @@
 - Sử dụng vmware workstation làm môi trường dựng lab. 
 - Máy server: 
  - Ubuntu 14.04 64 bit, 2 NIC (eth0 để ra internet tả gói - sử dụng `Bridge` hoặc `NAT`, eth1 quản trị - `hostonly`).
- - Máy server cài các gói KVM, gói virt-manager để điều khiển máy ảo thông qua giao diện đồ họa.
+ - Máy server cài các gói KVM, gói virt-manager để điều khiển máy ảo thông qua giao diện đồ họa (`Virtual Machine Manager`)
  - Cài đặt Linux Bridge hoặc OpenvSwitch để ảo hóa network cho các máy ảo. Trong ví dụ này sử dụng Linux Bridge
  - Cài đặt các gói hỗ trợ X11 phía Server là: `xorg, openbox`
 - Máy Client: 
