@@ -15,6 +15,7 @@ lsmod | grep vhost
 echo vhost_net >> /etc/modules 
 
 echo "Cai dat goi de su dung duoc X11 tren host"
+# Goi cai dat nay se giup cau hinh Xming de dieu khien KVM tu windows
 sudo apt-get -y install xorg openbox
 
 echo "Cau hinh network"
