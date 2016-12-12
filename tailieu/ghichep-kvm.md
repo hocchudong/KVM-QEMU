@@ -56,11 +56,11 @@ Bước 1:
 Bước 2: 
 - Cấu hình putty để sử dụng được xming
 - Khởi động putty và cấu hình để kích hoạt X11 phía client theo hình các thao tác: `Connection` => `SSH` => `X11` 
-![Putty1](../images/img1.png)
+![Putty1](../hinhanh/img1.png)
 
 Bước 3: 
 - Thực hiện nhập IP của máy chủ Ubuntu vào mục `Secssion` trong putty
-![Putty2](../images/img2.png)
+![Putty2](../hinhanh/img2.png)
 
 - Login với tài khoản `root` (lưu ý, tính năng cho phép ssh bằng `root` phải được kích hoạt trước) và gõ lệnh dưới để khởi động công cụ quản lý KVM
 	```sh
@@ -69,5 +69,5 @@ Bước 3:
 
 - Sẽ có màn hình thông báo của Xming được hiển thị ra, bắt đầu có thể sử dụng công cụ `virt-manager` để quản lý KVM
 
-![virt-manage](../images/img3.png)
+![virt-manage](../hinhanh/img3.png)
 

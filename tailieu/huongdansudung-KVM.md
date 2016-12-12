@@ -29,7 +29,7 @@ su -
 Bước 1.2: Di chuyển vào thư mục chứa các image của KVM trên máy chủ và tải các file images về
 	```sh
 
-	cd /var/lib/libvirt/images/
+	cd /var/lib/libvirt/hinhanh/
 
 	wget https://ncu.dl.sourceforge.net/project/gns-3/Qemu%20Appliances/linux-microcore-3.8.2.img
 
@@ -45,34 +45,34 @@ Bước 1.3: Kích hoạt Xming (X11 client) để điều khiển virt-magager
 	```
 
 - Sau khi thực hiện lệnh này xong sẽ có cửa sổ quản lý KVM xuất hiện.
-![VMM1](../images/vmm1.png)
+![VMM1](../hinhanh/vmm1.png)
 
 #### Bước 2: Sử dụng GUI của virt-manage
 
 Bước 2.1: Bắt đâu tạo máy ảo.
 - Tại cửa sổ của `Virtual Machine Manager`, chọn `New`
-![vmm2](../images/vmm2.png)
+![vmm2](../hinhanh/vmm2.png)
 
 - Nhập tên máy ảo
 - Chọn file images đã download trước đó (bước này chính là bước tạo máy ảo từ file images có sẵn)
-![vmm3](../images/vmm3.png)
+![vmm3](../hinhanh/vmm3.png)
 - Chọn `Forward` để sang bước tiếp
 
 - Chọn `Browse` để tìm đến file images có sẵn
 
-![vmm4](../images/vmm4.png)
+![vmm4](../hinhanh/vmm4.png)
 
 - Lựa chọn image `linux-microcore-3.8.2.img` và chọn `Choose Volume`
 
-![vmm5](../images/vmm5.png)
+![vmm5](../hinhanh/vmm5.png)
 
 - Sau khi chọn xong, sẽ có màn hình dưới. Các mục khác để nguyên và chọn tiếp `Forward`
 
-![vmm6](../images/vmm6.png)
+![vmm6](../hinhanh/vmm6.png)
 
 - Cửa sổ tiếp sẽ thiết lập RAM và CPU cho máy ảo, để mặc định và chọn `Forward`
 
-![vmm7](../images/vmm7.png)
+![vmm7](../hinhanh/vmm7.png)
 
 - Cửa sổ tiếp theo sẽ thiết lập các tùy chọn khác
  - Lựa chọn vào mục `Customize configuration before install`
@@ -80,19 +80,19 @@ Bước 2.1: Bắt đâu tạo máy ảo.
 
 - Chọn `Finish`
 
-![vmm8](../images/vmm8.png)
+![vmm8](../hinhanh/vmm8.png)
 
 - Lựa chọn vào mục `Boot Options`
 - Tích vào mục `Hard Disk` để thiết lập chế độ boot của máy ảo từ disk
 - Lựa chọn `Apply` để chấp nhận các thiết lập.
 - Sau đó chọn `Begin Installation` để bắt đầu khởi động máy ảo.
 
-![vmm9](../images/vmm9.png)
+![vmm9](../hinhanh/vmm9.png)
 
 - Màn hình console của máy ảo sẽ xuất hiện và có thể đăng nhập được vào máy ảo
 
-![vmm10](../images/vmm10.png)
+![vmm10](../hinhanh/vmm10.png)
 
 - Màn hình quản lý của VMM
 
-![vmm11](../images/vmm11.png)
+![vmm11](../hinhanh/vmm11.png)
