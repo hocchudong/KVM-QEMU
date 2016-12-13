@@ -90,16 +90,9 @@
 	iface ens32 inet manual
 
 
-	# Dat IP dong cho bridge `br0`
+	# Dat IP dong cho bridge `br0`. Interface nay duoc gan vao br0 cua OpenvSwitch
 	auto br0
 	iface br0 inet dhcp
-	dns-nameservers 8.8.8.8 8.8.4.4
-	dns-search test.local
-	bridge_ports ens32
-	bridge_fd 9
-	bridge_hello 2
-	bridge_maxage 12
-	bridge_stp off
 
 	auto ens33
 	iface ens33 inet dhcp
