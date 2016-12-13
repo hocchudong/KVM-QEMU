@@ -29,7 +29,7 @@ su -
 Bước 1.2: Di chuyển vào thư mục chứa các image của KVM trên máy chủ và tải các file images về
 	```sh
 
-	cd /var/lib/libvirt/hinhanh/
+	cd /var/lib/libvirt/images/
 
 	wget https://ncu.dl.sourceforge.net/project/gns-3/Qemu%20Appliances/linux-microcore-3.8.2.img
 
@@ -39,7 +39,7 @@ Bước 1.2: Di chuyển vào thư mục chứa các image của KVM trên máy 
 - Hai file images trên sẽ được dùng để tạo máy ảo mà không cần phải cài từ đầu (chúng giống như những file ghost)
 
 Bước 1.3: Kích hoạt Xming (X11 client) để điều khiển virt-magager
--  Lưu ý: trước khi thực hiện lệnh `virt-manage` cần tham khảo bài ở đây để biết cách setup X11 phía Client: [Link tham khảo](https://github.com/hocchudong/KVM-QEMU/blob/master/docs/ghichep-kvm.md#hướng-dẫn-sử-dụng-kvm-bằng-xming)
+-  Lưu ý: trước khi thực hiện lệnh `virt-manage` cần tham khảo bài ở đây để biết cách setup X11 phía Client: [Link tham khảo](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#hướng-dẫn-sử-dụng-kvm-bằng-xming)
 	```sh
 	virt-manager
 	```

@@ -110,26 +110,23 @@
 	iface ens32 inet dhcp
 
 
-	# Dat IP dong cho bridge `br0`. Interface nay duoc gan vao br0 cua OpenvSwitch
+	# Dat IP dong cho bridge "br0". Interface nay duoc gan vao br0 cua OpenvSwitch
 
 	auto br0
 	iface br0 inet dhcp
-	bridge_ports ens33
-	bridge_fd 9
-	bridge_hello 2
-	bridge_maxage 12
-	bridge_stp off
+	# bridge_ports ens33
+	# bridge_fd 9
+	# bridge_hello 2
+	# bridge_maxage 12
+	# bridge_stp off
 
 	# ens33
 	auto ens33
 	iface ens33 inet manual
-
-
 	EOF
 	```
 
 - Restart lại network của máy chủ
-
 	```sh
 	sudo ifdown --force -a && sudo ifup --force -a
 	```
