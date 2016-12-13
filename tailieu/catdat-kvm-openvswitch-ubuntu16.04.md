@@ -14,7 +14,7 @@
 - Cài đặt KVM
 	```sh 
 	echo  "Update and install the needed packages"
-	PACKAGES="qemu-kvm libvirt-bin bridge-utils virtinst xorg openbox"
+	PACKAGES="qemu-kvm libvirt-bin virt-manager bridge-utils virtinst xorg openbox"
 	sudo apt-get update
 	sudo apt-get dist-upgrade -qy
 
