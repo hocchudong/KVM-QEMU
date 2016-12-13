@@ -27,11 +27,24 @@
 	sudo adduser `id -un` kvm
 	```
 
-- Xóa các bridge do Linux Bridge khi cài cùng KVM sinh ra
+- Do khi cài KVM thì mặc định `Linux Bridge` (một trong các sự lựa chọn để ảo hóa network trong Linux - tương đương với OpenvSwtich) sẽ được cài cùng và sinh ra bridge `virbr0`. Có thể kiểm tra bằng lệnh dưới, ta sẽ thấy có tên bridge.
+	```sh
+	brctl show
+	```
+
+- Do vây, ta sẽ xóa các bridge do Linux Bridge khi cài cùng KVM sinh ra để sử dụng OpenvSwitch
 	```sh
 	sudo virsh net-destroy default 
 	sudo virsh net-autostart --disable default
 	```
+
+- Kiểm tra lại bằng lệnh `brctl show` ta sẽ không thấy bridge `virbr0`. Lúc này OK
+	```sh
+	root@u16-com2:~# brctl show
+	bridge name     bridge id               STP enabled     interfaces
+	root@u16-com2:~#
+	```
+
 
 ### Cài đặt và cấu hình OpenvSwitch
 
@@ -40,7 +53,7 @@
 	sudo apt-get install -qy openvswitch-switch openvswitch-common 
 	sudo service openvswitch-switch start
 	```
-	
+
 - Cấu hình hỗ trợ thêm OpenvSwitch
 	```sh
 	sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
