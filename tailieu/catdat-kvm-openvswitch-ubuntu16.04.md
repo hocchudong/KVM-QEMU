@@ -59,7 +59,7 @@
 	```
 
  - Kết quả là: (OpenvSwitch phiên bản 2.5.0)
- 
+
 	 	```sh
 		ovs-vsctl (Open vSwitch) 2.5.0
 		Compiled Mar 10 2016 14:16:49
@@ -78,6 +78,25 @@
 	sudo ovs-vsctl add-br br0
 	sudo ovs-vsctl add-port br0 ens33
 	```
+
+- Kiểm tra xem bridge và interface đã được gán trong OpenvSwitch hay chưa
+	```sh
+	ovs-vsctl show
+	```
+
+ - Kết quả là
+
+		```sh
+		9be04e06-1c0b-43f6-b713-411d91d0cb28
+		    Bridge "br0"
+		        Port "br0"
+		            Interface "br0"
+		                type: internal
+		        Port "ens33"
+		            Interface "ens33"
+		    ovs_version: "2.5.0"
+		root@u16-com2:~#
+		```
 
 ### Cấu hình network cho máy chủ Ubuntu
 
