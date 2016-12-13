@@ -17,8 +17,8 @@
 
 #### Cài đặt KVM với OpenvSwich
 - Chú ý: 
- - Nếu sử dụng Ubuntu 14.04 thì làm theo tài liệu này
- - Nếu sử dụng Ubuntu 16.04 thì theo tài liệu này
+ - Tham khảo 1: [Cài đặt KVM- OpenvSwitch trên Ubuntu 14.04](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/catdat-kvm-openvswitch-ubuntu14.04.md)
+ - Tham khảo 2: [Cài đặt KVM- OpenvSwitch trên Ubuntu 16.04](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/catdat-kvm-openvswitch-ubuntu16.04.md)
 
 #### Cài đặt KVM với Linux Bridge
 - Nội dung:
