@@ -14,7 +14,7 @@
 - Cài đặt KVM
 	```sh 
 	echo  "Update and install the needed packages"
-	PACKAGES="qemu-kvm libvirt-bin bridge-utils virtinst"
+	PACKAGES="qemu-kvm libvirt-bin bridge-utils virtinst xorg openbox"
 	sudo apt-get update
 	sudo apt-get dist-upgrade -qy
 
@@ -130,3 +130,9 @@
 	```sh
 	sudo ifdown --force -a && sudo ifup --force -a
 	```
+
+- Chuyển sang bước tạo máy ảo
+
+### Tạo máy ảo trong KVM và sử dụng Network là OpenvSwitch
+
+- Tham khảo cách sử dụng Virt Virtual Machine (VMM)
