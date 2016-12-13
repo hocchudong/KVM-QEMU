@@ -87,7 +87,7 @@ Việc cuối cùng cần làm là tạo OVS bridge cho phép KVM kết nối t�
 	```sh
 	auto lo
 	iface lo inet loopback
-	
+
 	auto eth0
 	iface eth0 inet static
 	address 10.10.10.71
@@ -142,7 +142,7 @@ virt-install --name vmname --ram 1024 --vcpus=1 \
 --graphics none --console pty,target_type=serial --hvm \
 --os-variant ubuntutrusty --virt-type=kvm --os-type linux
 ```
-- Chi tiết các tham số của lệnh ``virt-install`` có thể tham khảo thêm tại <a href="https://linux.die.net/man/1/virt-install">Link này.
+- Chi tiết các tham số của lệnh ``virt-install`` có thể tham khảo thêm [tại đây](https://linux.die.net/man/1/virt-install)
 
 **Note**
 
