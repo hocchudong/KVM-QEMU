@@ -5,7 +5,7 @@
 ## Yêu cầu cấu hình:
 - Môi trường giả lập: VMware Workstation 
 - Hệ điều hành: Ubuntu 16.04 Server 64 bit (máy cài KVM và OpenvSwitch)
-- NIC1: Sử dụng hostonly của vmware workstation. Có tên là `ens32`
+- NIC1: Sử dụng hostonly của vmware workstation. Có tên là `ens32`. Dùng để quản trị.
 - NIC2: Sử dụng NAT hoặc bridge(sẽ thực hiện bridge và NIC này). Có tên là `ens33`
 
 ## Các bước cài đặt
@@ -75,7 +75,7 @@
 - Tạo bridge trên OpenvSwitch và gán NIC của máy chủ vào bridge này. Ví dụ này là `ens32`
 	```sh
 	sudo ovs-vsctl add-br br0
-	sudo ovs-vsctl add-port br0 ens32
+	sudo ovs-vsctl add-port br0 ens33
 	```
 
 ### Cấu hình network cho máy chủ Ubuntu
@@ -87,16 +87,14 @@
 
 	# ens32
 	auto ens32
-	iface ens32 inet manual
+	iface ens32 inet dhcp
 
 
 	# Dat IP dong cho bridge `br0`. Interface nay duoc gan vao br0 cua OpenvSwitch
+
 	auto br0
 	iface br0 inet dhcp
-
-	auto ens33
-	iface ens33 inet dhcp
-	bridge_ports ens32
+	bridge_ports ens33
 	bridge_fd 9
 	bridge_hello 2
 	bridge_maxage 12
@@ -104,7 +102,7 @@
 
 	# ens33
 	auto ens33
-	iface ens33 inet dhcp
+	iface ens33 inet manual
 
 
 	EOF
