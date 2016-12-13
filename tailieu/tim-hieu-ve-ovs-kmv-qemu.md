@@ -87,16 +87,19 @@ Việc cuối cùng cần làm là tạo OVS bridge cho phép KVM kết nối t�
 	```sh
 	auto lo
 	iface lo inet loopback
+	
 	auto eth0
 	iface eth0 inet static
 	address 10.10.10.71
 	netmask 255.255.255.0
+
 	auto eth1
 	iface eth1 inet manual
 	up ifconfig $IFACE 0.0.0.0 up
 	up ip link set $IFACE promisc on
 	down ip link set $IFACE promisc off
 	down ifconfig $IFACE down
+
 	auto br0
 	iface br0 inet static
 	address 172.16.69.71
