@@ -1,7 +1,4 @@
 ﻿##1. Giới thiệu
-<ul></ul>
-<ul></ul>
-<ul></ul>
 
 ##2. Cài đặt
 ###a. Cài đặt KVM, OVS

@@ -1,5 +1,7 @@
 ## Hướng dẫn sử dụng Virsh Virtual Machine
-- Yêu cầu: Phía server đã cài đặt KVM và cấu hình network ok.
+- Yêu cầu: Phía server đã cài đặt KVM và cấu hình network ok. Sử dụng một trong các tham khảo dưới:
+ - Tham khảo 1: [Cài đặt KVM- OpenvSwitch trên Ubuntu 14.04](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/catdat-kvm-openvswitch-ubuntu14.04.md)
+ - Tham khảo 2: [Cài đặt KVM- OpenvSwitch trên Ubuntu 16.04](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/catdat-kvm-openvswitch-ubuntu16.04.md)
 - Thực hiện các bước này trên Client (Máy windows sẽ ssh vào máy chủ cài KVM)
 
 ### Chuẩn bị cài đặt.
