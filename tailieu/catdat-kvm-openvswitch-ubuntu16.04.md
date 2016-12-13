@@ -109,20 +109,22 @@
 	auto ens32
 	iface ens32 inet dhcp
 
-
-	# Dat IP dong cho bridge "br0". Interface nay duoc gan vao br0 cua OpenvSwitch
-
-	auto br0
-	iface br0 inet dhcp
-	# bridge_ports ens33
-	# bridge_fd 9
-	# bridge_hello 2
-	# bridge_maxage 12
-	# bridge_stp off
-
 	# ens33
 	auto ens33
 	iface ens33 inet manual
+	up ifconfig $IFACE 0.0.0.0 up
+	up ip link set $IFACE promisc on
+	down ip link set $IFACE promisc off
+	down ifconfig $IFACE down
+
+	# Dat IP dong cho bridge "br0". Interface nay duoc gan vao br0 cua OpenvSwitch
+	auto br0
+	iface br0 inet dhcp
+	# address 172.16.69.99
+	# netmask 255.255.255.0
+	# gateway 172.16.69.1
+	# dns-nameservers 8.8.8.8
+
 	EOF
 	```
 
@@ -152,5 +154,83 @@
 	```sh
 	apt-get install libglu1-mesa -y
 	```
+	
+- Tùy chọn: có thể sửa dòng 28 trong file ` /etc/ssh/sshd_config` để cho phép ssh bằng tài khoản `root` từ xa, dòng đó sửa thành dòng dưới. Tùy chọn này cho phép dùng `virt-manage` với tài khoản root.
+	```sh
+	PermitRootLogin yes
+	```
 
-- Tham khảo cách sử dụng VVM ở đây : [Link](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#hướng-dẫn-tạo-máy-ảo-trong-kvm-bằng-lệnh-bằng-công-cụ-đồ-họa-virtual-machine-manager)
+### Cấu hình network cho KVM sử dụng openvswitch
+- Nếu không cấu hình bước này, khi dùng lệnh `virt-install` tạo máy ảo, mặc định sẽ sử dụng Linux Bridge
+- Kiểm tra xem có các network nào trong KVM 
+	```sh
+	virsh net-list --all
+	```
+
+- Mặc định sẽ có 1 network tên là defaul, chính network này sẽ sử dụng Linux Bridge, do vậy cần tiến hành tạo network mới để libvirt sử dụng.
+- Tạo file cho libvirt network
+	```sh
+	cat << EOF > ovsnet.xml
+	<network>
+	  <name>br0</name>
+	  <forward mode='bridge'/>
+	  <bridge name='br0'/>
+	  <virtualport type='openvswitch'/>
+	</network>
+	EOF
+	```
+
+
+- Thực hiện lệnh để tạo network 
+	```sh
+	virsh net-define ovsnet.xml
+	virsh net-start br0
+	virsh net-autostart br0
+	```
+
+- Kiểm tra lại network đã khai báo cho libvirt bằng lệnh `virsh net-list --all`, chúng ta sẽ nhìn thấy network có tên là `br0`, đây chính là network có type là `openvswitch` đã khai báo ở trên.
+	```sh
+	 Name                 State      Autostart     Persistent
+	----------------------------------------------------------
+	 br0                  active     yes           yes
+	 default              inactive   no            yes
+
+	root@u16-com2:~#
+	```
+
+### Tạo máy ảo gắn vào bridge của OpenvSwitch
+
+### Cách 1: Tạo bằng lệnh từ file img có sẵn
+
+- Tải file image (giống như file ghost) về để khởi động, ví dụ này sẽ images linux được thu gọn. File được đặt trong thư mục chứa images của KVM (thư mục `/var/lib/libvirt/images`)
+	```sh
+	cd /var/lib/libvirt/images
+	wget wget https://ncu.dl.sourceforge.net/project/gns-3/Qemu%20Appliances/linux-microcore-3.8.2.img
+	```
+
+- Khởi động máy ảo với iamges vừa down về bằng lệnh `virt-manage`
+	```sh
+	cd /root/
+
+	sudo virt-install \
+	     -n VM01 \
+	     -r 128 \
+	      --vcpus 1 \
+	     --os-variant=generic \
+	     --disk path=/var/lib/libvirt/images/test.img,format=qcow2,bus=virtio,cache=none \
+	     --network bridge=br0,virtualport_type='openvswitch' \
+	     --hvm --virt-type kvm \
+	     --vnc --noautoconsole \
+	     --import
+	```
+
+- Dùng VMM để quan sát máy ảo vừa tạo, nếu dùng Putty cần cấu hình Forward X11 phía client (phía máy SSH vào máy chủ) theo [tài liệu này](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#Phía-client)
+- Cài đặt và khởi động Xming
+- Thực hiện lệnh 
+	```sh
+	sudo virt-manage
+	```	
+
+### Cách 2: Tạo máy ảo bằng công cụ đồ họa VMM trên windows
+
+- Tham khảo cách sử dụng công cụ đồ họa `VVM` ở đây : [Link](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#hướng-dẫn-tạo-máy-ảo-trong-kvm-bằng-lệnh-bằng-công-cụ-đồ-họa-virtual-machine-manager)

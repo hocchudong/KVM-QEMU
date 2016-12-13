@@ -1,60 +1,11 @@
-# Hướng dẫn cài đặt và quản lý KVM 
+## Hướng dẫn sử dụng Virsh Virtual Machine
+- Yêu cầu: Phía server đã cài đặt KVM và cấu hình network ok.
+- Thực hiện các bước này trên Client (Máy windows sẽ ssh vào máy chủ cài KVM)
 
-## Hướng dẫn cài đặt KVM 
-
-### Mô hình
-- Sử dụng vmware workstation làm môi trường dựng lab. 
-- Máy server: 
- - Ubuntu 14.04 64 bit, 2 NIC (eth0 để ra internet tải gói - sử dụng `Bridge` hoặc `NAT`, eth1 quản trị - `hostonly`).
- - Máy server cài các gói KVM, gói virt-manager để điều khiển máy ảo thông qua giao diện đồ họa (`Virtual Machine Manager`)
- - Cài đặt Linux Bridge hoặc OpenvSwitch để ảo hóa network cho các máy ảo. Trong ví dụ này sử dụng Linux Bridge
- - Cài đặt các gói hỗ trợ X11 phía Server là: `xorg, openbox`
-- Máy Client: 
- - Sử dụng hệ điều hành windows 
- - Cài đặt putty hoặc MobaXterm (ví dụ này dùng putty)
- - Máy này sẽ thực hiện điều khiển KVM thông qua giao diện đồ họa đã được cài trên phía máy chủ.
-
-
-#### Cài đặt KVM với OpenvSwich
-- Chú ý: 
- - Nếu sử dụng Ubuntu 14.04 thì làm theo tài liệu này
- - Nếu sử dụng Ubuntu 16.04 thì theo tài liệu này
-
-#### Cài đặt KVM với Linux Bridge
-- Nội dung:
- - Cài đặt KVM và Linux Bridge cùng các gói bổ trợ trên máy chủ
- - Cài đặt XMING trên Client, XMING là công cụ cho phép quản lý KVM thông qua X11, XMING được cài trên windows và kết hợp cùng với các ứng dụng ssh (putty, MobaXterm ...)
-
-##### Phía server 
-- Thực hiện cài đặt bằng tay hoặc bằng script (ví dụ này cài bằng script)
-- Login vào máy chủ Ubuntu và thực hiện script với quyền root.
-	```sh
-	su -
-	apt-get update
-	wget https://raw.githubusercontent.com/hocchudong/KVM-QEMU/master/chuontrinh/setup-kvm.sh
-	```
-
-- Tùy chọn: có thể sửa dòng 28 trong file ` /etc/ssh/sshd_config` để cho phép ssh bằng tài khoản `root` từ xa, dòng đó sửa thành dòng dưới
-	```sh
-	PermitRootLogin yes
-	```
-
-- Thực thi script
-	```sh
-	chmod +x setup-kvm.sh
-	bash setup-kvm.sh
-	```
-
-- Ở scrit trên sẽ cài đặt các thành phần sau
- - Thành phần KVM để tạo và quản lý máy ảo
- - Thành phần đồ họa quản lý KVM 
- - Gói linux bridge để cung cấp cơ chế network ảo cho máy ảo.
- - Gói hỗ trợ X11 phía server (script sử dụng gói xorg và openbox là các gói nhỏ nhẹ và hỗ trợ GUI cho linux)
-
-#### Phía client 
+### Chuẩn bị cài đặt.
 
 - Ví dụ này sử dụng putty để ssh tới máy chủ Ubuntu
-- Nếu bạn dùng các ứng dụng hỗ trợ thao tác enable X11 sẵn thì không cần làm bước này và chỉ cần bước SSH
+- Nếu bạn dùng các ứng dụng hỗ trợ thao tác enable X11 sẵn thì không cần làm bước này và chỉ cần bước SSH (MobaXterm hỗ trợ Forward X11 mặc định)
 
 Bước 1: 
 - Tải Xming tại địa chỉ sau https://sourceforge.net/projects/xming/
@@ -80,11 +31,6 @@ Bước 3:
 ![virt-manage](../hinhanh/img3.png)
 
 - Chuyển xuống bước hướng dẫn tạo máy ảo trong KVM bằng GUI
-
-## Hướng dẫn tạo máy ảo trong KVM bằng lệnh
-```sh
-Đang cập nhật
-```
 
 ## Hướng dẫn tạo máy ảo trong KVM bằng công cụ đồ họa `Virtual Machine Manager`
 ### Tạo máy ảo từ đầu
