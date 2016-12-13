@@ -40,6 +40,7 @@
 	sudo apt-get install -qy openvswitch-switch openvswitch-common 
 	sudo service openvswitch-switch start
 	```
+	
 - Cấu hình hỗ trợ thêm OpenvSwitch
 	```sh
 	sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
