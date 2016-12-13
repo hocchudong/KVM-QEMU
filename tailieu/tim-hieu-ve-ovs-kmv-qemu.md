@@ -54,12 +54,13 @@ Các gói OVS được cài đặt xong, chúng ta sẽ check KVM bằng lệnh 
 
 Việc cuối cùng cần làm là tạo OVS bridge cho phép KVM kết nối tới để đi ra ngoài. Để làm được điều này, chúng ta sẽ xử lý 02 bước sau
 
-B1: Đầu tiên, sẽ xử dụng lệnh `ovs-vsctl` để tạo bridge và add với 1 physical interface:
+- B1: Đầu tiên, sẽ xử dụng lệnh `ovs-vsctl` để tạo bridge và add với 1 physical interface:
 	```sh
 	ovs-vsctl add-br br0
 	ovs-vsctl add-port br0 eth1
 	```
 
+- Kiểm tra các bridge đã tạo và interface đã được gán hay chưa
 	```sh
 	ovs-vsctl show
 	fd22e02b-3a43-4200-8f03-d619a2e51b78
@@ -72,33 +73,31 @@ B1: Đầu tiên, sẽ xử dụng lệnh `ovs-vsctl` để tạo bridge và add
 		ovs_version: "2.0.2"
 	```
 
-Command thực hiện restart network: 
+- Command thực hiện restart network: 
+	```sh
+	ovs-vsctl add-port br0 eth1 && ifdown -a && ifup -a && ifconfig eth1 0 && route add default gw 172.16.69.1
+	```
 
-```sh
-ovs-vsctl add-port br0 eth1 && ifdown -a && ifup -a && ifconfig eth1 0 && route add default gw 172.16.69.1
-```
-
-B2: Sửa file `/etc/network/interfaces` để tạo bridge tự động khi khởi động máy.
-
-```sh
-root@ubuntu:~# cat /etc/network/interfaces |egrep -v "^#|^$"
-auto lo
-iface lo inet loopback
-auto eth0
-iface eth0 inet static
-address 10.10.10.71
-netmask 255.255.255.0
-auto eth1
-iface eth1 inet manual
-auto br0
-iface br0 inet static
-address 172.16.69.71
-netmask 255.255.255.0
-gateway 172.16.69.1
-network 172.16.69.0
-broadcast 172.16.69.255
-dns-nameservers 8.8.8.8 8.8.4.4
-```
+- B2: Sửa file `/etc/network/interfaces` để tạo bridge tự động khi khởi động máy.
+	```sh
+	root@ubuntu:~# cat /etc/network/interfaces |egrep -v "^#|^$"
+	auto lo
+	iface lo inet loopback
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.71
+	netmask 255.255.255.0
+	auto eth1
+	iface eth1 inet manual
+	auto br0
+	iface br0 inet static
+	address 172.16.69.71
+	netmask 255.255.255.0
+	gateway 172.16.69.1
+	network 172.16.69.0
+	broadcast 172.16.69.255
+	dns-nameservers 8.8.8.8 8.8.4.4
+	```
 
 ### b. KVM
 
