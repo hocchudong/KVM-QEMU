@@ -81,6 +81,10 @@ Việc cuối cùng cần làm là tạo OVS bridge cho phép KVM kết nối t�
 - B2: Sửa file `/etc/network/interfaces` để tạo bridge tự động khi khởi động máy.
 	```sh
 	root@ubuntu:~# cat /etc/network/interfaces |egrep -v "^#|^$"
+	```
+
+- Kết  quả của lệnh trên là
+	```sh
 	auto lo
 	iface lo inet loopback
 	auto eth0
@@ -113,13 +117,13 @@ Việc cuối cùng cần làm là tạo OVS bridge cho phép KVM kết nối t�
 - Bạn có thể tìm thấy cấu hình XML của một KVM guest theo 2 cách, cả 2 cách đều sử dụng lệnh `virsh` là một phần của libvirt 
  - Sửa file cầu hình của một guest, sử dụng `virsh edit <Name of guest VM>`, hệ thống sẽ mở file XML trong cửa sổ đang làm việc - Xuất file cấu hình của guest, sử dụng lệnh `virsh dumpxml <Name of guest VM>`, lệnh này sẽ dump file cấu hình XML ra STDOUT, bạn có thể chuyển nó vào file nếu muốn.
 - Thành phần thứ 2 của KVM guest là storage; như đã nhắc ở trên, cái này có thể là một file trong hệ thống hoặc có thể là một volume managed với một logical volume manager (LVM) 
- - Sửa file cầu hình của một guest, sử dụng `virsh edit <Name of guest VM>, hệ thống sẽ mở file XML trong cửa sổ đang làm việc
+ - Sửa file cầu hình của một guest, sử dụng `virsh edit <Name of guest VM>`, hệ thống sẽ mở file XML trong cửa sổ đang làm việc
 - Xuất file cấu hình của guest, sử dụng lệnh `virsh dumpxml <Name of guest VM>`, lệnh này sẽ dump file cấu hình XML ra STDOUT, bạn có thể chuyển nó vào file nếu muốn.
 
 #### Tạo KVM guest
 - Có 02 cách để tạo một KVM guest:
 -Tạo thủ công file XML mô tả guest, sử dụng lệnh `virsh define <Name of XML file>` để import vào khai báo. Bạn có thể tạo file XML mới dựa trên file đã có và chỉ thay đổi một vài tham số. 
-- Sử dụng libvirt-compatible tool như <i>virt-install</i> để tạo guest definition
+- Sử dụng libvirt-compatible tool như `virt-install` để tạo guest definition
 
 - Ở đây tạo nhanh một KVM guest sử dụng `virt-install`
 
