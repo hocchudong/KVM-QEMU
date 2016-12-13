@@ -5,7 +5,7 @@
 ## Yêu cầu cấu hình:
 - Môi trường giả lập: VMware Workstation 
 - Hệ điều hành: Ubuntu 16.04 Server 64 bit (máy cài KVM và OpenvSwitch)
-- NIC1: Sử dụng hostonly của vmware workstation. Có tên là `ens32`. Dùng để quản trị.
+- NIC1: Sử dụng hostonly của vmware workstation. Có tên là `ens32`. Dùng để quản trị.vi 
 - NIC2: Sử dụng NAT hoặc bridge(sẽ thực hiện bridge và NIC này). Có tên là `ens33`
 
 ## Các bước cài đặt
@@ -59,6 +59,7 @@
 	```
 
  - Kết quả là: (OpenvSwitch phiên bản 2.5.0)
+ 
 	 	```sh
 		ovs-vsctl (Open vSwitch) 2.5.0
 		Compiled Mar 10 2016 14:16:49
