@@ -167,7 +167,7 @@
 	virsh net-list --all
 	```
 
-- Mặc định sẽ có 1 network tên là defaul, chính network này sẽ sử dụng Linux Bridge, do vậy cần tiến hành tạo network mới để libvirt sử dụng.
+- Mặc định sẽ có 1 network tên là `default`, chính network này sẽ sử dụng Linux Bridge, do vậy cần tiến hành tạo network mới để libvirt sử dụng.
 - Tạo file cho libvirt network
 	```sh
 	cat << EOF > ovsnet.xml
