@@ -27,7 +27,7 @@
 	sudo adduser `id -un` kvm
 	```
 
-- Do khi cài KVM thì mặc định `Linux Bridge` (một trong các sự lựa chọn để ảo hóa network trong Linux - tương đương với OpenvSwtich) sẽ được cài cùng và sinh ra bridge `virbr0`. Có thể kiểm tra bằng lệnh dưới, ta sẽ thấy có tên bridge.
+- Do khi cài KVM thì mặc định `Linux Bridge` (Linux Bridge là một trong các sự lựa chọn để ảo hóa network trong Linux - tương đương với OpenvSwtich) sẽ được cài cùng và sinh ra bridge `virbr0`. Có thể kiểm tra bằng lệnh dưới, ta sẽ thấy có tên bridge.
 	```sh
 	brctl show
 	```
@@ -52,6 +52,19 @@
 	```sh
 	sudo apt-get install -qy openvswitch-switch openvswitch-common 
 	sudo service openvswitch-switch start
+	```
+
+- Kiểm tra phiên bản của OpenvSwtich bằng lệnh
+	```sh
+	ovs-vsctl -V
+	```
+
+ - Kết quả là: (OpenvSwitch phiên bản 2.5.0)
+ 	```sh
+	ovs-vsctl (Open vSwitch) 2.5.0
+	Compiled Mar 10 2016 14:16:49
+	DB Schema 7.12.1
+	root@u16-com2:~#
 	```
 
 - Cấu hình hỗ trợ thêm OpenvSwitch
