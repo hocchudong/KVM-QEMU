@@ -72,100 +72,101 @@ Bước 3:
 ![virt-manage](../hinhanh/img3.png)
 
 ###  Tài liệu hướng dẫn sử dụng KVM
-	- Yêu cầu: Đã cài đặt KVM và các công cụ hỗ trợ.
 
-	## Hướng dẫn tạo máy ảo trong KVM bằng lệnh
+- Yêu cầu: Đã cài đặt KVM và các công cụ hỗ trợ.
+
+## Hướng dẫn tạo máy ảo trong KVM bằng lệnh
+```sh
+Đang cập nhật
+```
+
+## Hướng dẫn tạo máy ảo trong KVM bằng lệnh bằng công cụ đồ họa `Virtual Machine Manager`
+### Tạo máy ảo từ đầu
+
+- Máy ảo sẽ được tạo từ file ISO
+
+```sh
+update sau
+```
+
+### Tạo máy ảo từ file images có sẵn (giống như file ghost)
+- Có thể thực hiện script hoặc tham khảo cách cài KVM, các thành phần hỗ trợ khác để thực hiện được các bước ở dưới theo tài liệu này: [Link](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#hướng-dẫn-sử-dụng-kvm-bằng-xming)
+
+#### Bước 1: Tải các file images và khởi động `Virtual Machine Manager`
+
+Bước 1.1: Tải file img từ internet về
+- Login vào máy chủ Ubuntu cài đặt KVM và chuyển sang quyền `root`
+```sh
+su -
+```
+
+Bước 1.2: Di chuyển vào thư mục chứa các image của KVM trên máy chủ và tải các file images về
 	```sh
-	Đang cập nhật
+
+	cd /var/lib/libvirt/images/
+
+	wget https://ncu.dl.sourceforge.net/project/gns-3/Qemu%20Appliances/linux-microcore-3.8.2.img
+
+	wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
 	```
 
-	## Hướng dẫn tạo máy ảo trong KVM bằng lệnh bằng công cụ đồ họa `Virtual Machine Manager`
-	### Tạo máy ảo từ đầu
+- Hai file images trên sẽ được dùng để tạo máy ảo mà không cần phải cài từ đầu (chúng giống như những file ghost)
 
-	- Máy ảo sẽ được tạo từ file ISO
-
+Bước 1.3: Kích hoạt Xming (X11 client) để điều khiển virt-magager
+-  Lưu ý: trước khi thực hiện lệnh `virt-manage` cần tham khảo bài ở đây để biết cách setup X11 phía Client: [Link tham khảo](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#hướng-dẫn-sử-dụng-kvm-bằng-xming)
 	```sh
-	update sau
+	virt-manager
 	```
 
-	### Tạo máy ảo từ file images có sẵn (giống như file ghost)
-	- Có thể thực hiện script hoặc tham khảo cách cài KVM, các thành phần hỗ trợ khác để thực hiện được các bước ở dưới theo tài liệu này: [Link](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#hướng-dẫn-sử-dụng-kvm-bằng-xming)
+- Sau khi thực hiện lệnh này xong sẽ có cửa sổ quản lý KVM xuất hiện.
+![VMM1](../hinhanh/vmm1.png)
 
-	#### Bước 1: Tải các file images và khởi động `Virtual Machine Manager`
+#### Bước 2: Sử dụng GUI của virt-manage
 
-	Bước 1.1: Tải file img từ internet về
-	- Login vào máy chủ Ubuntu cài đặt KVM và chuyển sang quyền `root`
-	```sh
-	su -
-	```
+Bước 2.1: Bắt đâu tạo máy ảo.
+- Tại cửa sổ của `Virtual Machine Manager`, chọn `New`
+![vmm2](../hinhanh/vmm2.png)
 
-	Bước 1.2: Di chuyển vào thư mục chứa các image của KVM trên máy chủ và tải các file images về
-		```sh
+- Nhập tên máy ảo
+- Chọn file images đã download trước đó (bước này chính là bước tạo máy ảo từ file images có sẵn)
+![vmm3](../hinhanh/vmm3.png)
+- Chọn `Forward` để sang bước tiếp
 
-		cd /var/lib/libvirt/images/
+- Chọn `Browse` để tìm đến file images có sẵn
 
-		wget https://ncu.dl.sourceforge.net/project/gns-3/Qemu%20Appliances/linux-microcore-3.8.2.img
+![vmm4](../hinhanh/vmm4.png)
 
-		wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
-		```
+- Lựa chọn image `linux-microcore-3.8.2.img` và chọn `Choose Volume`
 
-	- Hai file images trên sẽ được dùng để tạo máy ảo mà không cần phải cài từ đầu (chúng giống như những file ghost)
+![vmm5](../hinhanh/vmm5.png)
 
-	Bước 1.3: Kích hoạt Xming (X11 client) để điều khiển virt-magager
-	-  Lưu ý: trước khi thực hiện lệnh `virt-manage` cần tham khảo bài ở đây để biết cách setup X11 phía Client: [Link tham khảo](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#hướng-dẫn-sử-dụng-kvm-bằng-xming)
-		```sh
-		virt-manager
-		```
+- Sau khi chọn xong, sẽ có màn hình dưới. Các mục khác để nguyên và chọn tiếp `Forward`
 
-	- Sau khi thực hiện lệnh này xong sẽ có cửa sổ quản lý KVM xuất hiện.
-	![VMM1](../hinhanh/vmm1.png)
+![vmm6](../hinhanh/vmm6.png)
 
-	#### Bước 2: Sử dụng GUI của virt-manage
+- Cửa sổ tiếp sẽ thiết lập RAM và CPU cho máy ảo, để mặc định và chọn `Forward`
 
-	Bước 2.1: Bắt đâu tạo máy ảo.
-	- Tại cửa sổ của `Virtual Machine Manager`, chọn `New`
-	![vmm2](../hinhanh/vmm2.png)
+![vmm7](../hinhanh/vmm7.png)
 
-	- Nhập tên máy ảo
-	- Chọn file images đã download trước đó (bước này chính là bước tạo máy ảo từ file images có sẵn)
-	![vmm3](../hinhanh/vmm3.png)
-	- Chọn `Forward` để sang bước tiếp
+- Cửa sổ tiếp theo sẽ thiết lập các tùy chọn khác
+ - Lựa chọn vào mục `Customize configuration before install`
+ - Chọn vào `Advance Options` để quan sát card mạng cho máy ảo, trong hướng dẫn này sử dụng card `Bridge` là `br0`. Lúc này máy ảo sẽ nhận IP cùng với card mạng đã được bridge (xem thêm tài liệu về linux bridge)
 
-	- Chọn `Browse` để tìm đến file images có sẵn
+- Chọn `Finish`
 
-	![vmm4](../hinhanh/vmm4.png)
+![vmm8](../hinhanh/vmm8.png)
 
-	- Lựa chọn image `linux-microcore-3.8.2.img` và chọn `Choose Volume`
+- Lựa chọn vào mục `Boot Options`
+- Tích vào mục `Hard Disk` để thiết lập chế độ boot của máy ảo từ disk
+- Lựa chọn `Apply` để chấp nhận các thiết lập.
+- Sau đó chọn `Begin Installation` để bắt đầu khởi động máy ảo.
 
-	![vmm5](../hinhanh/vmm5.png)
+![vmm9](../hinhanh/vmm9.png)
 
-	- Sau khi chọn xong, sẽ có màn hình dưới. Các mục khác để nguyên và chọn tiếp `Forward`
+- Màn hình console của máy ảo sẽ xuất hiện và có thể đăng nhập được vào máy ảo
 
-	![vmm6](../hinhanh/vmm6.png)
+![vmm10](../hinhanh/vmm10.png)
 
-	- Cửa sổ tiếp sẽ thiết lập RAM và CPU cho máy ảo, để mặc định và chọn `Forward`
+- Màn hình quản lý của VMM
 
-	![vmm7](../hinhanh/vmm7.png)
-
-	- Cửa sổ tiếp theo sẽ thiết lập các tùy chọn khác
-	 - Lựa chọn vào mục `Customize configuration before install`
-	 - Chọn vào `Advance Options` để quan sát card mạng cho máy ảo, trong hướng dẫn này sử dụng card `Bridge` là `br0`. Lúc này máy ảo sẽ nhận IP cùng với card mạng đã được bridge (xem thêm tài liệu về linux bridge)
-
-	- Chọn `Finish`
-
-	![vmm8](../hinhanh/vmm8.png)
-
-	- Lựa chọn vào mục `Boot Options`
-	- Tích vào mục `Hard Disk` để thiết lập chế độ boot của máy ảo từ disk
-	- Lựa chọn `Apply` để chấp nhận các thiết lập.
-	- Sau đó chọn `Begin Installation` để bắt đầu khởi động máy ảo.
-
-	![vmm9](../hinhanh/vmm9.png)
-
-	- Màn hình console của máy ảo sẽ xuất hiện và có thể đăng nhập được vào máy ảo
-
-	![vmm10](../hinhanh/vmm10.png)
-
-	- Màn hình quản lý của VMM
-
-	![vmm11](../hinhanh/vmm11.png)
+![vmm11](../hinhanh/vmm11.png)
