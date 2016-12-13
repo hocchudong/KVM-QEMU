@@ -112,10 +112,10 @@
 	# ens33
 	auto ens33
 	iface ens33 inet manual
-	up ifconfig $IFACE 0.0.0.0 up
-	up ip link set $IFACE promisc on
-	down ip link set $IFACE promisc off
-	down ifconfig $IFACE down
+	up ifconfig \$IFACE 0.0.0.0 up
+	up ip link set \$IFACE promisc on
+	down ip link set \$IFACE promisc off
+	down ifconfig \$IFACE down
 
 	# Dat IP dong cho bridge "br0". Interface nay duoc gan vao br0 cua OpenvSwitch
 	auto br0
@@ -167,7 +167,7 @@
 	virsh net-list --all
 	```
 
-- Mặc định sẽ có 1 network tên là defaul, chính network này sẽ sử dụng Linux Bridge, do vậy cần tiến hành tạo network mới để libvirt sử dụng.
+- Mặc định sẽ có 1 network tên là `default`, chính network này sẽ sử dụng Linux Bridge, do vậy cần tiến hành tạo network mới để libvirt sử dụng.
 - Tạo file cho libvirt network
 	```sh
 	cat << EOF > ovsnet.xml
@@ -209,6 +209,7 @@
 	```
 
 - Khởi động máy ảo với iamges vừa down về bằng lệnh `virt-manage`
+- Lựa chọn 1: sử dụng tùy chọn `--network bridge=br0,virtualport_type='openvswitch'`
 	```sh
 	cd /root/
 
@@ -223,6 +224,23 @@
 	     --vnc --noautoconsole \
 	     --import
 	```
+
+- Lựa chọn 2: Sử dụng tùy chọn ` --network network=br0` (đối với Ubuntu 14 nên lựa chọn tùy chọn này)
+	```sh
+	cd /root/
+
+	sudo virt-install \
+	     -n VM01 \
+	     -r 128 \
+	      --vcpus 1 \
+	     --os-variant=generic \
+	     --disk path=/var/lib/libvirt/images/test.img,format=qcow2,bus=virtio,cache=none \
+	     --network network=br0 \
+	     --hvm --virt-type kvm \
+	     --vnc --noautoconsole \
+	     --import
+	```
+
 
 - Dùng VMM để quan sát máy ảo vừa tạo, nếu dùng Putty cần cấu hình Forward X11 phía client (phía máy SSH vào máy chủ) theo [tài liệu này](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/huongdansudung-Virsh-Virtual-Machine.md)
 - Cài đặt và khởi động Xming

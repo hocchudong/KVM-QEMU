@@ -32,7 +32,7 @@ hướng dẫn sẽ có bước này).
 	apt-get install openvswitch-controller openvswitch-switch openvswitch-datapath-source -y
 	```
 
-Các gói OVS được cài đặt xong, chúng ta sẽ check KVM bằng lệnh sau:
+- Các gói OVS được cài đặt xong, chúng ta sẽ check KVM bằng lệnh sau:
 	```sh
 	virsh -c qemu:///system list
 	```
@@ -45,6 +45,7 @@ Các gói OVS được cài đặt xong, chúng ta sẽ check KVM bằng lệnh 
 
 - Trả về trạng thái của OVS process
 - Nếu mọi thứ làm việc đúng, bạn có thể chạy lệnh:
+
 	```sh
 	ovs-vsctl show
 	```
