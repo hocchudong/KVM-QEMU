@@ -14,7 +14,7 @@
 - Cài đặt KVM
 	```sh 
 	echo  "Update and install the needed packages"
-	PACKAGES="qemu-kvm libvirt-bin virt-manager bridge-utils virtinst xorg openbox"
+	PACKAGES="qemu-kvm libvirt-bin bridge-utils virtinst"
 	sudo apt-get update
 	sudo apt-get dist-upgrade -qy
 
@@ -133,6 +133,24 @@
 
 - Chuyển sang bước tạo máy ảo
 
-### Tạo máy ảo trong KVM và sử dụng Network là OpenvSwitch
+## Tạo máy ảo trong KVM và sử dụng Network là OpenvSwitch
 
 - Tham khảo cách sử dụng Virt Virtual Machine (VMM)
+
+### Cài đặt virt-manage và X11 để sử dụng công cụ virt virtual machine
+
+- Cài đặt virt-manage
+	```sh
+	apt-get install -y virt-manager xorg openbox
+	```
+
+- Cài đặt gói dưới để fix lỗi khi gõ lệnh virt-manage
+	```sh
+	Couldn't open libGL.so.1: libGL.so.1: cannot open shared object file: No such file or directory
+	```
+
+	```sh
+	apt-get install libglu1-mesa -y
+	```
+
+- Tham khảo cách sử dụng VVM ở đây : [Link](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#hướng-dẫn-tạo-máy-ảo-trong-kvm-bằng-lệnh-bằng-công-cụ-đồ-họa-virtual-machine-manager)
