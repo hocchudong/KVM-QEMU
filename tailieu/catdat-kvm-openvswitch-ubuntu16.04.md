@@ -96,11 +96,16 @@
 
 	auto ens33
 	iface ens33 inet dhcp
-	bridge_ports eth2
+	bridge_ports ens32
 	bridge_fd 9
 	bridge_hello 2
 	bridge_maxage 12
 	bridge_stp off
+
+	# ens33
+	auto ens33
+	iface ens33 inet dhcp
+
 
 	EOF
 	```
