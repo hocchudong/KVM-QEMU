@@ -93,6 +93,10 @@ Việc cuối cùng cần làm là tạo OVS bridge cho phép KVM kết nối t�
 	netmask 255.255.255.0
 	auto eth1
 	iface eth1 inet manual
+	up ifconfig $IFACE 0.0.0.0 up
+	up ip link set $IFACE promisc on
+	down ip link set $IFACE promisc off
+	down ifconfig $IFACE down
 	auto br0
 	iface br0 inet static
 	address 172.16.69.71
@@ -135,8 +139,45 @@ virt-install --name vmname --ram 1024 --vcpus=1 \
 --graphics none --console pty,target_type=serial --hvm \
 --os-variant ubuntutrusty --virt-type=kvm --os-type linux
 ```
-
 - Chi tiết các tham số của lệnh ``virt-install`` có thể tham khảo thêm tại <a href="https://linux.die.net/man/1/virt-install">Link này.
+
+**Note**
+
+- Trong quá trình test, tôi sử dụng lệnh virt-install như trên nhưng bị lỗi, card mạng trên VM tạo ra không thể gán trực tiếp vào ovs. Tôi đã thực hiện tạo VM bằng KVM như sau:
+
+- Thực hiện tạo 02 scritp để add và xóa port trong switch:
+	- Script add port vào switch: *vi /etc/ovs-ifup*
+```sh
+#!/bin/sh
+switch='br0'
+/sbin/ifconfig $1 0.0.0.0 up
+ovs-vsctl add-port ${switch} $1
+```
+	- Script xóa port trên switch: *vi /etc/ovs-ifdown*
+```sh
+#!/bin/sh
+switch='br0'
+/sbin/ifconfig $1 0.0.0.0 down
+ovs-vsctl del-port ${switch} $1
+```
+	- Phân quyền để script có thể thực thi: 
+```sh
+chmod +x /etc/ovs-ifup /etc/ovs-ifdown
+```	
+
+- Thực hiện tạo VM bằng lệnh KVM với cirror image và gán vào ovs bridge "br-int"
+	- Lệnh tạo máy ảo 1: 
+```sh
+kvm -m 512 -net nic,macaddr=00:00:00:00:cc:10 -net tap,script=/etc/ovs-ifup,downscript=/etc/ovs-ifdown -nographic /home/tannt/cirros-0.3.4-x86_64-disk.img
+```
+	- Lệnh tạo máy ảo 2:
+```sh
+kvm -m 512 -net nic,macaddr=00:11:22:CC:CC:10 -net tap,script=/etc/ovs-ifup,downscript=/etc/ovs-ifdown -nographic /home/tannt/cirros-0.3.4-x86_64-disk.img
+```
+	- Lệnh tạo máy ảo 3:
+```sh
+kvm -m 512 -net nic,macaddr=22:22:22:00:cc:10 -net tap,script=/etc/ovs-ifup,downscript=/etc/ovs-ifdown -nographic /home/tannt/cirros-0.3.4-x86_64-disk.img
+```
 
 ## Tham khảo
 - http://blog.scottlowe.org/2012/08/17/installing-kvm-and-open-vswitch-on-ubuntu/ 
