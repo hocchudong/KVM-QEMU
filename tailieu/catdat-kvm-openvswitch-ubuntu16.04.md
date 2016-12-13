@@ -14,7 +14,7 @@
 - Cài đặt KVM
 	```sh 
 	echo  "Update and install the needed packages"
-	PACKAGES="qemu-kvm libvirt-bin bridge-utils virtinst"
+	PACKAGES="qemu-kvm libvirt-bin virt-manager bridge-utils virtinst xorg openbox"
 	sudo apt-get update
 	sudo apt-get dist-upgrade -qy
 
@@ -110,26 +110,29 @@
 	iface ens32 inet dhcp
 
 
-	# Dat IP dong cho bridge `br0`. Interface nay duoc gan vao br0 cua OpenvSwitch
+	# Dat IP dong cho bridge "br0". Interface nay duoc gan vao br0 cua OpenvSwitch
 
 	auto br0
 	iface br0 inet dhcp
-	bridge_ports ens33
-	bridge_fd 9
-	bridge_hello 2
-	bridge_maxage 12
-	bridge_stp off
+	# bridge_ports ens33
+	# bridge_fd 9
+	# bridge_hello 2
+	# bridge_maxage 12
+	# bridge_stp off
 
 	# ens33
 	auto ens33
 	iface ens33 inet manual
-
-
 	EOF
 	```
 
 - Restart lại network của máy chủ
-
 	```sh
 	sudo ifdown --force -a && sudo ifup --force -a
 	```
+
+- Chuyển sang bước tạo máy ảo
+
+### Tạo máy ảo trong KVM và sử dụng Network là OpenvSwitch
+
+- Tham khảo cách sử dụng Virt Virtual Machine (VMM)
