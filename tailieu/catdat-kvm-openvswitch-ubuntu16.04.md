@@ -34,7 +34,6 @@
 	```
 
 ### Cài đặt và cấu hình OpenvSwitch
-
 - Cài đặt OpenvSwtich
 	```sh
 	sudo apt-get install -qy openvswitch-switch openvswitch-common 
@@ -52,7 +51,10 @@
 	sudo ovs-vsctl add-port br0 ens32
 	```
 
-### Cấu hình các NICs cho máy chủ Ubuntu
+### Cấu hình network cho máy chủ Ubuntu
+
+- Cấu hình network 
+
 	```sh
 	cat << EOF > /etc/network/interfaces
 
@@ -79,6 +81,7 @@
 	```
 
 - Restart lại network của máy chủ
+
 	```sh
 	sudo ifdown --force -a && sudo ifup --force -a
 	```
