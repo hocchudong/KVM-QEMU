@@ -42,7 +42,6 @@
 	```sh
 	root@u16-com2:~# brctl show
 	bridge name     bridge id               STP enabled     interfaces
-	root@u16-com2:~#
 	```
 
 
@@ -60,12 +59,12 @@
 	```
 
  - Kết quả là: (OpenvSwitch phiên bản 2.5.0)
- 	```sh
-	ovs-vsctl (Open vSwitch) 2.5.0
-	Compiled Mar 10 2016 14:16:49
-	DB Schema 7.12.1
-	root@u16-com2:~#
-	```
+	 	```sh
+		ovs-vsctl (Open vSwitch) 2.5.0
+		Compiled Mar 10 2016 14:16:49
+		DB Schema 7.12.1
+		root@u16-com2:~#
+		```
 
 - Cấu hình hỗ trợ thêm OpenvSwitch
 	```sh
