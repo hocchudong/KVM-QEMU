@@ -224,7 +224,7 @@
 	     --import
 	```
 
-- Dùng VMM để quan sát máy ảo vừa tạo, nếu dùng Putty cần cấu hình Forward X11 phía client (phía máy SSH vào máy chủ) theo [tài liệu này](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#Phía-client)
+- Dùng VMM để quan sát máy ảo vừa tạo, nếu dùng Putty cần cấu hình Forward X11 phía client (phía máy SSH vào máy chủ) theo [tài liệu này](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/huongdansudung-Virsh-Virtual-Machine.md)
 - Cài đặt và khởi động Xming
 - Thực hiện lệnh 
 	```sh
@@ -233,4 +233,4 @@
 
 ### Cách 2: Tạo máy ảo bằng công cụ đồ họa VMM trên windows
 
-- Tham khảo cách sử dụng công cụ đồ họa `VVM` ở đây : [Link](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/ghichep-kvm.md#hướng-dẫn-tạo-máy-ảo-trong-kvm-bằng-lệnh-bằng-công-cụ-đồ-họa-virtual-machine-manager)
+- Tham khảo cách sử dụng công cụ đồ họa `VVM` ở đây : [Link](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/huongdansudung-Virsh-Virtual-Machine.md)
