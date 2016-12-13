@@ -34,6 +34,7 @@
 	```
 
 ### Cài đặt và cấu hình OpenvSwitch
+
 - Cài đặt OpenvSwtich
 	```sh
 	sudo apt-get install -qy openvswitch-switch openvswitch-common 
