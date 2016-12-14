@@ -9,45 +9,55 @@
 ################################################################################
 #!/bin/bash 
 
-echo "Update cac goi cai dat tren OS"
+if [ `id -u` -ne 0 ]; then
+   echo -e "\e[1;31m You need root privileges to run this script \e[0m"
+   exit 1
+fi
+
+# print yellow text
+function echocolor {
+	echo -e "\e[1;33m ########## $1 ########## \e[0m"
+}
+
+echocolor "Update cac goi cai dat tren OS"
 sleep 3
 apt-get -y update
 
-echo "Cau hinh ssh cho phep dang nhap root tu xa"
+echocolor "Cau hinh ssh cho phep dang nhap root tu xa"
 sleep 3
 sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 serivce ssh restart
 
-echo "Cai dat KVM va cac goi ho tro"
+echocolor "Cai dat KVM va cac goi ho tro"
 sleep 3
 apt-get -y install qemu-kvm libvirt-bin bridge-utils virtinst
 sudo adduser `id -un` libvirtd
 sudo adduser `id -un` kvm
 
-echo "Go bo bridge cua Linux bridge"
+echocolor "Go bo bridge cua Linux bridge"
 sleep 3
 virsh net-destroy default
 virsh net-autostart --disable default
 
-echo "Cai dat virt-manage va cac goi bo tro"
+echocolor "Cai dat virt-manage va cac goi bo tro"
 sleep 3
 apt-get -y install virt-manager xorg openbox
 
 
-echo "Cai dat OpenvSwitch"
+echocolor "Cai dat OpenvSwitch"
 sleep 3
 apt-get -y install openvswitch-controller openvswitch-switch openvswitch-datapath-source
 
-echo "Cau hinh them cho OVS"
+echocolor "Cau hinh them cho OVS"
 sleep 3
-sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sudo echocolor "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 sudo sysctl -p /etc/sysctl.conf
 
-echo "Kiem tra trang  thai cua OVS"
+echocolor "Kiem tra trang  thai cua OVS"
 sleep 3
 service openvswitch-switch status
 
-echo "Cau hinh NICs cho may chu"
+echocolor "Cau hinh NICs cho may chu"
 sleep 3
 cat << EOF > /etc/network/interfaces
 
@@ -69,12 +79,12 @@ iface br0 inet dhcp
 
 EOF
 
-echo "Tao bridge va gan port (interface) cho OVS"
+echocolor "Tao bridge va gan port (interface) cho OVS"
 sleep 3
 ovs-vsctl add-br br0
 ovs-vsctl add-port br0 eth1
 
-echo "Khai bao netwok libvirtd, su dung br0 cua OVS"
+echocolor "Khai bao netwok libvirtd, su dung br0 cua OVS"
 sleep 3
 cat << EOF > ovsnet.xml
 <network>
@@ -89,10 +99,10 @@ virsh net-define ovsnet.xml
 virsh net-start br0
 virsh net-autostart br0
 
-echo "Khoi dong lai network cua may chu"
+echocolor "Khoi dong lai network cua may chu"
 sleep 3
 ifdown --force -a && ifup --force -a
 
-echo "Khoi dong lai may chu"
+echocolor "Khoi dong lai may chu"
 sleep 3
 init 6
