@@ -1,6 +1,10 @@
 ################################################################################
 # Noi dung: Script cai dat KVM, OpenvSwitch
 # Nguoi thuc hien: congto@hocchudong.com
+# Yeu cau: 
+## May cai KVM va OpenvSwitch can 02 NICs. 
+## NIC1 su dung hostonly, NIC2 su dung NAT va duoc add vao bridge cua OpenvSwitch
+# Cach thuc thi: sudo bash kvm-ovs.sh
 ################################################################################
 #!/bin/bash 
 
