@@ -1,7 +1,4 @@
 ﻿##1. Giới thiệu
-<ul></ul>
-<ul></ul>
-<ul></ul>
 
 ##2. Cài đặt
 ###a. Cài đặt KVM, OVS
@@ -35,7 +32,7 @@ hướng dẫn sẽ có bước này).
 	apt-get install openvswitch-controller openvswitch-switch openvswitch-datapath-source -y
 	```
 
-Các gói OVS được cài đặt xong, chúng ta sẽ check KVM bằng lệnh sau:
+- Các gói OVS được cài đặt xong, chúng ta sẽ check KVM bằng lệnh sau:
 	```sh
 	virsh -c qemu:///system list
 	```
@@ -48,6 +45,7 @@ Các gói OVS được cài đặt xong, chúng ta sẽ check KVM bằng lệnh 
 
 - Trả về trạng thái của OVS process
 - Nếu mọi thứ làm việc đúng, bạn có thể chạy lệnh:
+
 	```sh
 	ovs-vsctl show
 	```
@@ -87,16 +85,19 @@ Việc cuối cùng cần làm là tạo OVS bridge cho phép KVM kết nối t�
 	```sh
 	auto lo
 	iface lo inet loopback
+
 	auto eth0
 	iface eth0 inet static
 	address 10.10.10.71
 	netmask 255.255.255.0
+
 	auto eth1
 	iface eth1 inet manual
 	up ifconfig $IFACE 0.0.0.0 up
 	up ip link set $IFACE promisc on
 	down ip link set $IFACE promisc off
 	down ifconfig $IFACE down
+
 	auto br0
 	iface br0 inet static
 	address 172.16.69.71
@@ -139,7 +140,7 @@ virt-install --name vmname --ram 1024 --vcpus=1 \
 --graphics none --console pty,target_type=serial --hvm \
 --os-variant ubuntutrusty --virt-type=kvm --os-type linux
 ```
-- Chi tiết các tham số của lệnh ``virt-install`` có thể tham khảo thêm tại <a href="https://linux.die.net/man/1/virt-install">Link này.
+- Chi tiết các tham số của lệnh ``virt-install`` có thể tham khảo thêm [tại đây](https://linux.die.net/man/1/virt-install)
 
 **Note**
 
