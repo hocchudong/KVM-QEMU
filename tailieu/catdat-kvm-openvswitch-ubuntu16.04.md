@@ -1,56 +1,138 @@
-# Update and install the needed packages
-PACKAGES="qemu-kvm libvirt-bin bridge-utils virtinst"
-sudo apt-get update
-sudo apt-get dist-upgrade -qy
+# Hướng dẫn cài đặt KVM, OpenvSwitch trên Ubuntu 16.04
 
-sudo apt-get install -qy ${PACKAGES}
+- Tham khảo: http://blog.codybunch.com/2016/10/14/KVM-and-OVS-on-Ubuntu-1604/
 
-# add our current user to the right groups
-sudo adduser `id -un` libvirtd
-sudo adduser `id -un` kvm
+## Yêu cầu cấu hình:
+- Môi trường giả lập: VMware Workstation 
+- Hệ điều hành: Ubuntu 16.04 Server 64 bit (máy cài KVM và OpenvSwitch)
+- NIC1: Sử dụng hostonly của vmware workstation. Có tên là `ens32`. Dùng để quản trị.vi 
+- NIC2: Sử dụng NAT hoặc bridge(sẽ thực hiện bridge và NIC này). Có tên là `ens33`
+
+## Các bước cài đặt
+### Cài đặt KVM và các gói phụ trợ
+
+- Cài đặt KVM
+	```sh 
+	echo  "Update and install the needed packages"
+	PACKAGES="qemu-kvm libvirt-bin virt-manager bridge-utils virtinst xorg openbox"
+	sudo apt-get update
+	sudo apt-get dist-upgrade -qy
+
+	sudo apt-get install -qy ${PACKAGES}
+	```
+
+- Gán quyền cho user `libvirtd` và `kvm`
+	```sh
+	sudo adduser `id -un` libvirtd
+	sudo adduser `id -un` kvm
+	```
+
+- Do khi cài KVM thì mặc định `Linux Bridge` (Linux Bridge là một trong các sự lựa chọn để ảo hóa network trong Linux - tương đương với OpenvSwtich) sẽ được cài cùng và sinh ra bridge `virbr0`. Có thể kiểm tra bằng lệnh dưới, ta sẽ thấy có tên bridge.
+	```sh
+	brctl show
+	```
+
+- Do vây, ta sẽ xóa các bridge do Linux Bridge khi cài cùng KVM sinh ra để sử dụng OpenvSwitch
+	```sh
+	sudo virsh net-destroy default 
+	sudo virsh net-autostart --disable default
+	```
+
+- Kiểm tra lại bằng lệnh `brctl show` ta sẽ không thấy bridge `virbr0`. Lúc này OK
+	```sh
+	root@u16-com2:~# brctl show
+	bridge name     bridge id               STP enabled     interfaces
+	```
 
 
-sudo virsh net-destroy default 
-sudo virsh net-autostart --disable default
+### Cài đặt và cấu hình OpenvSwitch
 
-sudo apt-get install -qy openvswitch-switch openvswitch-common 
-sudo service openvswitch-switch start
+- Cài đặt OpenvSwtich
+	```sh
+	sudo apt-get install -qy openvswitch-switch openvswitch-common 
+	sudo service openvswitch-switch start
+	```
+
+- Kiểm tra phiên bản của OpenvSwtich bằng lệnh
+	```sh
+	ovs-vsctl -V
+	```
+
+ - Kết quả là: (OpenvSwitch phiên bản 2.5.0)
+
+	 	```sh
+		ovs-vsctl (Open vSwitch) 2.5.0
+		Compiled Mar 10 2016 14:16:49
+		DB Schema 7.12.1
+		root@u16-com2:~#
+		```
+
+- Cấu hình hỗ trợ thêm OpenvSwitch
+	```sh
+	sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+	sudo sysctl -p /etc/sysctl.conf
+	```
+
+- Tạo bridge trên OpenvSwitch và gán NIC của máy chủ vào bridge này. Ví dụ này là `ens32`
+	```sh
+	sudo ovs-vsctl add-br br0
+	sudo ovs-vsctl add-port br0 ens33
+	```
+
+- Kiểm tra xem bridge và interface đã được gán trong OpenvSwitch hay chưa
+	```sh
+	ovs-vsctl show
+	```
+
+ - Kết quả là
+
+		```sh
+		9be04e06-1c0b-43f6-b713-411d91d0cb28
+		    Bridge "br0"
+		        Port "br0"
+		            Interface "br0"
+		                type: internal
+		        Port "ens33"
+		            Interface "ens33"
+		    ovs_version: "2.5.0"
+		root@u16-com2:~#
+		```
+
+### Cấu hình network cho máy chủ Ubuntu
+
+- Cấu hình network 
+
+	```sh
+	cat << EOF > /etc/network/interfaces
+
+	# ens32
+	auto ens32
+	iface ens32 inet dhcp
 
 
-sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-sudo sysctl -p /etc/sysctl.conf
+	# Dat IP dong cho bridge "br0". Interface nay duoc gan vao br0 cua OpenvSwitch
 
-sudo ovs-vsctl add-br br0
-sudo ovs-vsctl add-port br0 ens32
+	auto br0
+	iface br0 inet dhcp
+	# bridge_ports ens33
+	# bridge_fd 9
+	# bridge_hello 2
+	# bridge_maxage 12
+	# bridge_stp off
 
-- Thiet lap card mang 
+	# ens33
+	auto ens33
+	iface ens33 inet manual
+	EOF
+	```
 
-cat << EOF > /etc/network/interfaces
+- Restart lại network của máy chủ
+	```sh
+	sudo ifdown --force -a && sudo ifup --force -a
+	```
 
-# ens32
-auto ens32
-iface ens32 inet manual
+- Chuyển sang bước tạo máy ảo
 
+### Tạo máy ảo trong KVM và sử dụng Network là OpenvSwitch
 
-# The OVS bridge interface
-auto br0
-iface br0 inet dhcp
-# address 10.0.0.4
-# network 10.0.0.0
-# netmask 255.255.0.0
-# broadcast 10.0.255.255
-# gateway 10.0.0.2
-dns-nameservers 8.8.8.8 8.8.4.4
-dns-search test.local
-bridge_ports ens32
-bridge_fd 9
-bridge_hello 2
-bridge_maxage 12
-bridge_stp off
-
-auto ens33
-iface ens33 inet dhcp
-
-EOF
-
-sudo ifdown --force -a && sudo ifup --force -a
+- Tham khảo cách sử dụng Virt Virtual Machine (VMM)
