@@ -2,12 +2,12 @@
 # Noi dung: Script cai dat KVM, OpenvSwitch
 # Nguoi thuc hien: congto@hocchudong.com
 # Yeu cau: 
+## OS: Ubuntu 14.04 64 bit
 ## May cai KVM va OpenvSwitch can 02 NICs. 
 ## NIC1 su dung hostonly, NIC2 su dung NAT va duoc add vao bridge cua OpenvSwitch
 # Cach thuc thi: sudo bash kvm-ovs.sh
 ################################################################################
 #!/bin/bash 
-
 
 echo "Update cac goi cai dat tren OS"
 sleep 3
@@ -68,7 +68,6 @@ auto br0
 iface br0 inet dhcp
 
 EOF
-
 
 echo "Tao bridge va gan port (interface) cho OVS"
 sleep 3
