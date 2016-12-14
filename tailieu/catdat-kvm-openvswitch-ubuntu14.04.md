@@ -246,7 +246,9 @@ kvm -m 512 -net nic,macaddr=22:22:22:00:cc:10 -net tap,script=/etc/ovs-ifup,down
 	sudo virt-manage
 	```
 	
-- Nếu bạn sử dụng phần mềm [Xshell](https://www.netsarang.com/products/xsh_overview.html) thì có x-manager đã hỗ trợ sẵn việc tạo cửa sổ giao diện tương tự Forward X11
+- Nếu bạn sử dụng phần mềm [Xshell](https://www.netsarang.com/products/xsh_overview.html) thì có x-manager đã hỗ trợ sẵn việc tạo cửa sổ giao diện tương tự Forward X11.
+
+![xshell](../hinhanh/xshell.png)
 
 ## Tham khảo
 - http://blog.scottlowe.org/2012/08/17/installing-kvm-and-open-vswitch-on-ubuntu/ 
