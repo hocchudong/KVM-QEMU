@@ -50,7 +50,7 @@ apt-get -y install openvswitch-controller openvswitch-switch openvswitch-datapat
 
 echocolor "Cau hinh them cho OVS"
 sleep 3
-sudo echocolor "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 sudo sysctl -p /etc/sysctl.conf
 
 echocolor "Kiem tra trang  thai cua OVS"
