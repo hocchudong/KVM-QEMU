@@ -239,7 +239,7 @@ kvm -m 512 -net nic,macaddr=00:11:22:CC:CC:10 -net tap,script=/etc/ovs-ifup,down
 kvm -m 512 -net nic,macaddr=22:22:22:00:cc:10 -net tap,script=/etc/ovs-ifup,downscript=/etc/ovs-ifdown -nographic /home/tannt/cirros-0.3.4-x86_64-disk.img
 ```
 
-- Dùng VMM để quan sát máy ảo vừa tạo, nếu dùng Putty cần cấu hình Forward X11 phía client (phía máy SSH vào máy chủ) theo [tài liệu này](https://github.com/hocchudong/KVM-QEMU/blob/master/tailieu/huongdansudung-Virsh-Virtual-Machine.md)
+- Dùng VMM để quan sát máy ảo vừa tạo, nếu dùng Putty cần cấu hình Forward X11 phía client (phía máy SSH vào máy chủ) theo [tài liệu này](https://github.com/hocchudong/KVM-QEMU/blob/master/docs/huongdansudung-Virsh-Virtual-Machine.md)
 - Cài đặt và khởi động Xming
 - Thực hiện lệnh 
 	```sh
