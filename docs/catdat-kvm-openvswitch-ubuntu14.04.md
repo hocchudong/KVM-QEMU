@@ -1,7 +1,7 @@
-﻿##1. Giới thiệu
+﻿## 1. Giới thiệu
 
-##2. Cài đặt
-###a. Cài đặt KVM, OVS
+## 2. Cài đặt
+### a. Cài đặt KVM, OVS
 
 - Trong phần này, tôi sẽ đi sâu về Ubuntu Linux, KVM và Open vSwitch (OVS)
 - Trong bài test của tôi sử dụng Ubuntu server 14.04 LTS được cài trên máy ảo VMware. Lưu ý trong CPU chọn 02 tick hỗ trợ ảo hóa để hỗ trợ KVM. 
